@@ -27,7 +27,6 @@ https://support.google.com/a/answer/10286834
 
 Workspace Admin SDK Directory APIs allows access to
 Google Drive and Docs, but not to Google Cloud resources
-<<<<<<< HEAD:1 Professional Cloud Security Engineer/Revision1.txt
 
 Important links 
 https://support.google.com/a/answer/10427204
@@ -39,7 +38,50 @@ Create short-lived credentials for a service account
 ```
     gcloud iam service-accounts add-iam-policy-binding PRIV_SA \
     --member=serviceAccount:CALLER_SA --role=roles/iam.serviceAccountTokenCreator --format=json
-```    
+``` 
+
 If you use the REST API, and your system is configured to allow extended token lifetimes, you can create a token with a lifetime longer than the default. The Google Cloud CLI does not support setting a lifetime for the token.
-=======
->>>>>>> 4a43aafbda93946cafeff9ff8305bd3dfd0da660:1 Professional Cloud Security Engineer/Revision1.md
+
+
+
+Self-signed JSON Web Tokens (JWTs) are useful in a variety of scenarios:
+
+Authenticating to an API deployed with API Gateway.
+Authenticating a call to a Google API as described in Google's Authentication Guide.
+Securely communicating between your own applications. In this scenario, one application can sign a token that can be verified by another application for authentication purposes.
+Treating a service account as an identity provider by signing a JWT that contains arbitrary claims about a user, account, or device.
+
+
+Understand what kind of token you need, and use the appropriate steps provided in the sections below:
+https://cloud.google.com/iam/docs/create-short-lived-credentials-direct#before_you_begin
+OAuth 2.0 access tokens
+OpenID Connect (OIDC) ID tokens
+Self-signed JSON Web Tokens (JWTs)
+Self-signed binary blobs
+
+| Managing authentication
+
+https://cloud.google.com/apigee/docs/api-platform/tutorials/create-api-proxy-openapi-spec
+
+● Creating a password and session management policy for
+user accounts
+● Setting up Security Assertion Markup Language (SAML)
+and OAuth 
+https://cloud.google.com/apigee/docs/api-platform/system-administration/saml-overview   
+● Configuring and enforcing two-factor authentication
+
+
+If all your users will sign in through one IdP, using SAML:
+
+Follow the steps below in Configure an SSO profile for your organization.
+If you want to exclude some users from using SSO (and have them sign in directly to Google), follow the steps in Decide which users should use SSO, where you have the option to assign 'None' for SSO profile.
+
+
+SAML allows third-party identity services to enable single sign-on to Google platforms
+(Google being the service provider). Apigee uses SAML to enable single sign-on
+capabilities that are managed through the Google Admin console and require you to
+generate encrypted X.509 certificates storing public keys.
+
+
+
+Session control settings are configured in the Admin console
