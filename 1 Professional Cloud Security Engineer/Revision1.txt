@@ -1,0 +1,29 @@
+1. Managing Cloud Identity
+
+Active directory uses unencrypted LDAP 
+If you use Compute engine to host any directory its always important to use a encrypted channel 
+
+
+Scenario 1 - You want to migrate your all users running in on-premises windows server active directory to Google cloud Identity
+Solution - Use Cloud VPN to connect with on-premise network to your Google cloud network. run configuration manager and GCDS on windows server only and then transfer users to cloud identity using vpn securely.
+
+https://cloud.google.com/architecture/identity/federating-gcp-with-active-directory-synchronizing-user-accounts
+
+Google Cloud Directory Sync deployment requires a secure, isolated environment.
+Because Active Directory uses LDAP, which is unencrypted, the safest choice is to
+deploy on-premises. When running Google Cloud Directory Sync remotely or on
+Google Cloud, ensure that the communication channel is encrypted. You can do this
+by using Secure LDAP or Cloud VPN. Although this might add a layer of complexity to
+the process, it ensures that your data transfers are secure. If the source servers
+support GUI, you can run Configuration Manager to ease the process.
+
+
+<img src="https://cloud.google.com/static/solutions/images/federating-gcp-with-ad-sync-role-organization-groups.svg" alt="Getting started" />
+
+Always use dynamic groups to migrate users from another company, bank or gcp account. Dynamic groups allow
+you to create and automatically manage users based on identity attributes.
+https://support.google.com/a/answer/10286834
+
+
+Workspace Admin SDK Directory APIs allows access to
+Google Drive and Docs, but not to Google Cloud resources
