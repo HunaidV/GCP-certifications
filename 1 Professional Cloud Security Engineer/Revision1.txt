@@ -27,3 +27,16 @@ https://support.google.com/a/answer/10286834
 
 Workspace Admin SDK Directory APIs allows access to
 Google Drive and Docs, but not to Google Cloud resources
+
+Important links 
+https://support.google.com/a/answer/10427204
+https://cloud.google.com/architecture/identity/federating-gcp-with-active-directory-configuring-single-sign-on#email:-domain-substitution
+
+
+Create short-lived credentials for a service account
+
+```
+    gcloud iam service-accounts add-iam-policy-binding PRIV_SA \
+    --member=serviceAccount:CALLER_SA --role=roles/iam.serviceAccountTokenCreator --format=json
+```    
+If you use the REST API, and your system is configured to allow extended token lifetimes, you can create a token with a lifetime longer than the default. The Google Cloud CLI does not support setting a lifetime for the token.
