@@ -1,0 +1,87 @@
+1. Managing Cloud Identity
+
+Active directory uses unencrypted LDAP 
+If you use Compute engine to host any directory its always important to use a encrypted channel 
+
+
+Scenario 1 - You want to migrate your all users running in on-premises windows server active directory to Google cloud Identity
+Solution - Use Cloud VPN to connect with on-premise network to your Google cloud network. run configuration manager and GCDS on windows server only and then transfer users to cloud identity using vpn securely.
+
+https://cloud.google.com/architecture/identity/federating-gcp-with-active-directory-synchronizing-user-accounts
+
+Google Cloud Directory Sync deployment requires a secure, isolated environment.
+Because Active Directory uses LDAP, which is unencrypted, the safest choice is to
+deploy on-premises. When running Google Cloud Directory Sync remotely or on
+Google Cloud, ensure that the communication channel is encrypted. You can do this
+by using Secure LDAP or Cloud VPN. Although this might add a layer of complexity to
+the process, it ensures that your data transfers are secure. If the source servers
+support GUI, you can run Configuration Manager to ease the process.
+
+
+<img src="https://cloud.google.com/static/solutions/images/federating-gcp-with-ad-sync-role-organization-groups.svg" alt="Getting started" />
+
+Always use dynamic groups to migrate users from another company, bank or gcp account. Dynamic groups allow
+you to create and automatically manage users based on identity attributes.
+https://support.google.com/a/answer/10286834
+
+
+Workspace Admin SDK Directory APIs allows access to
+Google Drive and Docs, but not to Google Cloud resources
+
+Important links 
+https://support.google.com/a/answer/10427204
+https://cloud.google.com/architecture/identity/federating-gcp-with-active-directory-configuring-single-sign-on#email:-domain-substitution
+
+
+Create short-lived credentials for a service account
+
+```
+    gcloud iam service-accounts add-iam-policy-binding PRIV_SA \
+    --member=serviceAccount:CALLER_SA --role=roles/iam.serviceAccountTokenCreator --format=json
+``` 
+
+If you use the REST API, and your system is configured to allow extended token lifetimes, you can create a token with a lifetime longer than the default. The Google Cloud CLI does not support setting a lifetime for the token.
+
+
+
+Self-signed JSON Web Tokens (JWTs) are useful in a variety of scenarios:
+
+Authenticating to an API deployed with API Gateway.
+Authenticating a call to a Google API as described in Google's Authentication Guide.
+Securely communicating between your own applications. In this scenario, one application can sign a token that can be verified by another application for authentication purposes.
+Treating a service account as an identity provider by signing a JWT that contains arbitrary claims about a user, account, or device.
+
+
+Understand what kind of token you need, and use the appropriate steps provided in the sections below:
+https://cloud.google.com/iam/docs/create-short-lived-credentials-direct#before_you_begin
+OAuth 2.0 access tokens
+OpenID Connect (OIDC) ID tokens
+Self-signed JSON Web Tokens (JWTs)
+Self-signed binary blobs
+
+| Managing authentication
+
+https://cloud.google.com/apigee/docs/api-platform/tutorials/create-api-proxy-openapi-spec
+
+● Creating a password and session management policy for
+user accounts
+● Setting up Security Assertion Markup Language (SAML)
+and OAuth 
+https://cloud.google.com/apigee/docs/api-platform/system-administration/saml-overview   
+● Configuring and enforcing two-factor authentication
+
+
+If all your users will sign in through one IdP, using SAML:
+
+Follow the steps below in Configure an SSO profile for your organization.
+If you want to exclude some users from using SSO (and have them sign in directly to Google), follow the steps in Decide which users should use SSO, where you have the option to assign 'None' for SSO profile.
+
+
+SAML allows third-party identity services to enable single sign-on to Google platforms
+(Google being the service provider). Apigee uses SAML to enable single sign-on
+capabilities that are managed through the Google Admin console and require you to
+generate encrypted X.509 certificates storing public keys.
+
+
+
+Session control settings are configured in the Admin console
